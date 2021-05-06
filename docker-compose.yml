@@ -41,16 +41,6 @@ services:
       - "traefik.http.routers.traefik-secure.rule=Host(`${TRAEFIK_HOSTNAME}`)"
       - "traefik.http.routers.traefik-secure.middlewares=user-auth@file, ipwhitelist@file"
       - "traefik.http.routers.traefik-secure.service=api@internal"  
-    
-      # Catchall router to redirect http to https
-      - "traefik.http.routers.http-redirect.entrypoints=web"
-      - "traefik.http.routers.http-redirect.rule=HostRegexp(`{host:.+}`)"
-      - "traefik.http.routers.http-redirect.middlewares=to-https"
-      - "traefik.http.routers.http-redirect.priority=10000"
-
-      # Force HTTPS middleware, applied to all requests.
-      - "traefik.http.middlewares.to-https.redirectScheme.scheme=https"
-      - "traefik.http.middlewares.to-https.redirectScheme.permanent=true"
 
   portainer:
     image: portainer/portainer-ce:alpine
