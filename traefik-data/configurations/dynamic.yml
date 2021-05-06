@@ -1,0 +1,40 @@
+# Dynamic configuration
+http:
+  
+  middlewares:
+    # IP Whitelist
+    # This adds additional protection to Traefik and Portainer web user interfaces.
+    ipwhitelist:
+      ipWhiteList:
+        sourceRange:
+          # Change to your IP address
+          - "0.0.0.0"
+    # Security Headers
+    secureHeaders:
+      headers:
+        stsSeconds: 31536000                # Strict-Transport-Security
+        stsIncludeSubdomains: true
+        stsPreload: true
+        browserXssFilter: true              # X-XSS-Protection                 
+        customFrameOptionsValue: "SAMEORIGIN" # X-Frame-Options
+        contentTypeNosniff: true            # X-Content-Type-Options
+        referrerPolicy: "strict-origin-when-cross-origin"   # Referrer-Policy
+        
+    user-auth:
+      basicAuth:
+        users:
+          # generate:
+          # echo $(htpasswd -nb <username> <password>)
+          - "youradmintoken"
+
+tls:
+  options:
+    default:
+      cipherSuites:
+        - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+      minVersion: VersionTLS12
