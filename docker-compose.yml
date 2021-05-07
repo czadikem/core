@@ -112,4 +112,4 @@ networks:
 volumes:
   portainer-data:
     driver: glusterfs
-    name: "config-1/core"
+    name: "config-1/portainer-data"
