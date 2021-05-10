@@ -22,16 +22,6 @@ services:
           - node.role == manager
       restart_policy:
         condition: any
-      update_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-      rollback_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
@@ -39,7 +29,7 @@ services:
       # Secure entrypoint
       - "traefik.http.routers.traefik-secure.entrypoints=websecure"
       - "traefik.http.routers.traefik-secure.rule=Host(`${TRAEFIK_HOSTNAME}`)"
-      - "traefik.http.routers.traefik-secure.middlewares=user-auth@file, ipwhitelist@file"
+      - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
       - "traefik.http.routers.traefik-secure.service=api@internal"  
 
   portainer:
@@ -50,29 +40,19 @@ services:
       - agent
       - traefik-public
     volumes:
-      - portainer-data:/data
+      - /mnt-gluster/config-1/core/portainer-data:/data
     deploy:
       placement:
         constraints:
           - node.role == manager
       restart_policy:
         condition: any
-      update_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-      rollback_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-public"
       - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOSTNAME}`)"
-      - "traefik.http.routers.portainer.middlewares=user-auth@file, ipwhitelist@file"
+      - "traefik.http.routers.portainer.middlewares=user-auth@file"
       - "traefik.http.routers.portainer.service=portainer-service"
       - "traefik.http.services.portainer-service.loadbalancer.server.port=9000"
 
@@ -91,16 +71,6 @@ services:
       placement:
         constraints:
           - node.platform.os == linux
-      update_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
-      rollback_config:
-        parallelism: 2
-        delay: 10s
-        order: stop-first
-        monitor: 10s
 
 networks:
   agent:
@@ -108,8 +78,3 @@ networks:
     attachable: true
   traefik-public:
     external: true
-
-volumes:
-  portainer-data:
-    driver: glusterfs
-    name: "config-1/core/portainer-data"

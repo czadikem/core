@@ -2,13 +2,6 @@
 http:
   
   middlewares:
-    # IP Whitelist
-    # This adds additional protection to Traefik and Portainer web user interfaces.
-    ipwhitelist:
-      ipWhiteList:
-        sourceRange:
-          # Change to your IP address
-          - "0.0.0.0"
     # Security Headers
     secureHeaders:
       headers:
