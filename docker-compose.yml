@@ -22,15 +22,17 @@ services:
           - node.role == manager
       restart_policy:
         condition: any
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik-public"
-
-      # Secure entrypoint
-      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
-      - "traefik.http.routers.traefik-secure.rule=Host(`${TRAEFIK_HOSTNAME}`)"
-      - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
-      - "traefik.http.routers.traefik-secure.service=api@internal"  
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-public"
+  
+        # Secure entrypoint
+        - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+        - "traefik.http.routers.traefik-secure.rule=Host(`${TRAEFIK_HOSTNAME}`)"
+        - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
+        - "traefik.http.routers.traefik-secure.service=api@internal"
+        # Dummy service for Swarm port detection. The port can be any valid integer value.
+        - "traefik.http.services.dummy-svc.loadbalancer.server.port=9999"
 
   portainer:
     image: portainer/portainer-ce:alpine
@@ -40,21 +42,21 @@ services:
       - agent
       - traefik-public
     volumes:
-      - /mnt-gluster/config-1/core/portainer-data:/data
+      - ./portainer-data:/data
     deploy:
       placement:
         constraints:
           - node.role == manager
       restart_policy:
         condition: any
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik-public"
-      - "traefik.http.routers.portainer.entrypoints=websecure"
-      - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOSTNAME}`)"
-      - "traefik.http.routers.portainer.middlewares=user-auth@file"
-      - "traefik.http.routers.portainer.service=portainer-service"
-      - "traefik.http.services.portainer-service.loadbalancer.server.port=9000"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik-public"
+        - "traefik.http.routers.portainer.entrypoints=websecure"
+        - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOSTNAME}`)"
+        - "traefik.http.routers.portainer.middlewares=user-auth@file"
+        - "traefik.http.routers.portainer.service=portainer-service"
+        - "traefik.http.services.portainer-service.loadbalancer.server.port=9000"
 
   agent:
     image: portainer/agent:latest
