@@ -37,12 +37,11 @@ services:
   portainer:
     image: portainer/portainer-ce:alpine
     hostname: portainer
-    command: -H tcp://tasks.agent:9001 --tlsskipverify
     networks:
-      - agent
       - traefik-public
     volumes:
       - ./portainer-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       placement:
         constraints:
@@ -54,29 +53,9 @@ services:
         - "traefik.docker.network=traefik-public"
         - "traefik.http.routers.portainer.entrypoints=websecure"
         - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOSTNAME}`)"
-        - "traefik.http.routers.portainer.middlewares=user-auth@file"
         - "traefik.http.routers.portainer.service=portainer-service"
         - "traefik.http.services.portainer-service.loadbalancer.server.port=9000"
 
-  agent:
-    image: portainer/agent:latest
-    hostname: agent
-    networks:
-      - agent
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
-    deploy:
-      mode: global
-      restart_policy:
-        condition: any
-      placement:
-        constraints:
-          - node.platform.os == linux
-
 networks:
-  agent:
-    driver: overlay
-    attachable: true
   traefik-public:
     external: true
