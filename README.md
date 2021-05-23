@@ -10,4 +10,5 @@
 
 
 # core-services-swarm
-10. ```docker stack deploy -c <(docker-compose config) core```
+1.  ```docker stack deploy -c <(docker-compose config) core```
+2.  ```docker network create --driver=overlay traefik-public```
