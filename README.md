@@ -11,7 +11,7 @@ It is a docker swarm that has traefik and portainer and is the core of https://s
 2.  ```cd core```
 3.  ```rm portainer-data/blank.txt```  had to put in this github repository so github would not remove the portainer-data folder
 4.  ```cp .env.template .env```
-5.  ```nano.env```  Put your hostnames for traefik and portainer in this file  "You can get three free ones from noip"
+5.  ```nano.env```  Put your hostnames for traefik and portainer in this file  "You can get three free hostnames from noip"
 6.  ```nano traefik-data/traefik.yml```  change example@example.com to your email
 7.  ```echo $(htpasswd -nb <username> <password>)``` change <username> to your username and change <password> to your password(it can't contain symbols like !.,)
 8.  Copy the output of the above to your clipboard
