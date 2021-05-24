@@ -1,3 +1,6 @@
+# What is core-services-swarm
+It is a docker swarm that has traefik and portainer and is the core of https://silkky.cloud/ and my docker swarm.
+
 # core-services-swarm Install
 1.  Do ```git clone https://github.com/czadikem/core.git```
 2.  Then ```cd core```
@@ -13,3 +16,6 @@
 # core-services-swarm Deployment
 1.  ```docker stack deploy -c <(docker-compose config) core```
 2.  ```docker network create --driver=overlay traefik-public```
+
+# Acknowledgments
+Thanks to Oscar at https://silkky.cloud/ for helping me get this setup.  I also have to thank his wonderful Discord Community at https://discord.gg/BvqJQ3hNrQ
