@@ -1,3 +1,4 @@
+# core-services-swarm Install
 1.  Do ```git clone https://github.com/czadikem/core.git```
 2.  Then ```cd core```
 3.  ```cp .env.template .env```
@@ -9,6 +10,6 @@
 9.  do ```chmod 600 traefik-data/acme.json```
 
 
-# core-services-swarm
+# core-services-swarm Deployment
 1.  ```docker stack deploy -c <(docker-compose config) core```
 2.  ```docker network create --driver=overlay traefik-public```
