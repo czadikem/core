@@ -1,6 +1,11 @@
 # What is core-services-swarm
 It is a docker swarm that has traefik and portainer and is the core of https://silkky.cloud/ and my docker swarm.
 
+# Requirements
+1.  Install Docker Engine with this guide https://docs.docker.com/engine/install/
+2.  Install Docker Compose With this guide https://docs.docker.com/compose/install/
+3.  Lastly install git following this document https://gist.github.com/czadikem/60a83a15bd6df93a44c1a0606544a9ae
+
 # core-services-swarm Install
 1.  ```git clone https://github.com/czadikem/core.git```
 2.  ```cd core```
