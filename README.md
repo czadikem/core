@@ -23,5 +23,8 @@ It is a docker swarm that has traefik and portainer and is the core of https://s
 1.  ```docker stack deploy -c <(docker-compose config) core```
 2.  ```docker network create --driver=overlay traefik-public```
 
+# core-services-swarm Stop
+1.  ```docker stack down core```
+
 # Acknowledgments
 Thanks to Oscar at https://silkky.cloud/ for helping me get this setup.  I also have to thank his wonderful Discord Community at https://discord.gg/BvqJQ3hNrQ
